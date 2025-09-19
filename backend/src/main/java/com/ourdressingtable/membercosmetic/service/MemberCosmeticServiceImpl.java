@@ -1,7 +1,5 @@
 package com.ourdressingtable.membercosmetic.service;
 
-import static com.ourdressingtable.common.util.JsonNullableUtils.isUndefined;
-
 import com.ourdressingtable.common.exception.ErrorCode;
 import com.ourdressingtable.common.exception.OurDressingTableException;
 import com.ourdressingtable.common.util.SecurityUtil;

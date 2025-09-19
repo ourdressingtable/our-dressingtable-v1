@@ -1,7 +1,6 @@
 package com.ourdressingtable.membercosmetic.domain;
 
 import static com.ourdressingtable.common.util.JsonNullableUtils.applyTriState;
-import static com.ourdressingtable.common.util.JsonNullableUtils.isUndefined;
 
 import com.ourdressingtable.common.exception.ErrorCode;
 import com.ourdressingtable.common.exception.OurDressingTableException;
@@ -182,5 +181,10 @@ public class MemberCosmetic {
     public void changeDressingTable(DressingTable dressingTable) {
         this.dressingTable = dressingTable;
     }
+
+    private <T> T getOrDefault(T newValue, T currentValue) {
+        return (newValue != null) ? newValue : currentValue;
+    }
+
 
 }
