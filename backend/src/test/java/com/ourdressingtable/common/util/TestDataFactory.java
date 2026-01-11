@@ -40,8 +40,13 @@ import com.ourdressingtable.membercosmetic.dto.CreateMemberCosmeticRequest;
 import com.ourdressingtable.membercosmetic.dto.MemberCosmeticDetailResponse;
 import com.ourdressingtable.membercosmetic.dto.MemberCosmeticResponse;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.ourdressingtable.notification.domain.NotificationStatus;
+import com.ourdressingtable.notification.domain.NotificationType;
+import com.ourdressingtable.notification.domain.ScheduledNotification;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class TestDataFactory {
@@ -153,7 +158,7 @@ public class TestDataFactory {
                 .likeCount(5)
                 .likedByCurrentMember(true)
                 .author("사용자1")
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .build();
     }
 
@@ -426,6 +431,24 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static MemberCosmetic testMemberCosmeticWithExpiry(LocalDate expiryDate) {
+        Member member = Member.builder().id(100L).build();
+        return MemberCosmetic.builder()
+                .id(100L)
+                .member(member)
+                .expiredDate(expiryDate)
+                .build();
+    }
+
+    public static MemberCosmeticResponse testMemberCosmeticResponse(Long memberCosmeticId) {
+        return MemberCosmeticResponse.builder()
+                .id(memberCosmeticId)
+                .brand("헤라")
+                .name("블랙쿠션")
+                .category("")
+                .build();
+    }
+
     public static CosmeticBrand testCosmeticBrand(Long id) {
         return CosmeticBrand.builder()
                 .id(id)
@@ -439,5 +462,15 @@ public class TestDataFactory {
                 .build();
         ReflectionTestUtils.setField(cosmeticCategory, "id", id);
         return cosmeticCategory;
+    }
+
+    public static ScheduledNotification testScheduledNotification(Long id) {
+        return ScheduledNotification.builder()
+                .id(id)
+                .memberId(100L)
+                .type(NotificationType.COSMETIC_EXPIRY_DAY_OF)
+                .payloadJson("{\"cosmeticId\":200}")
+                .status(NotificationStatus.SCHEDULED)
+                .build();
     }
 }

@@ -1,7 +1,7 @@
 package com.ourdressingtable.notification.service;
 
 import com.ourdressingtable.notification.component.KafkaNotificationProducer;
-import com.ourdressingtable.notification.domain.NotificationStatus;
+import com.ourdressingtable.notification.dto.NotificationEventPayload;
 import com.ourdressingtable.notification.repository.ScheduledNotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +37,24 @@ public class NotificationWorker {
             if (removed != null && removed > 0) {
                 String dedup = "notification"+key;
                 Boolean first = stringRedisTemplate.opsForValue().setIfAbsent(dedup, "1", Duration.ofMinutes(10));
-                if (Boolean.TRUE.equals(first)) {
-                    producer.send(key);
-                    scheduledNotificationRepository.findById(Long.valueOf(key)).ifPresent(n -> { n.markEnqueued(); scheduledNotificationRepository.save(n); });
+                if (!Boolean.TRUE.equals(first)) {
+                   continue;
                 }
+                
+                Long notifyId = Long.valueOf(key);
+                
+                scheduledNotificationRepository.findById(notifyId).ifPresent(scheduledNotification -> {
+                    scheduledNotification.markEnqueued();
+                    scheduledNotificationRepository.save(scheduledNotification);
+
+                    NotificationEventPayload payload = NotificationEventPayload.builder()
+                            .notifyId(scheduledNotification.getId())
+                            .memberId(scheduledNotification.getMemberId())
+                            .type(scheduledNotification.getType().name())
+                            .payloadJson(scheduledNotification.getPayloadJson())
+                            .build();
+                    producer.send(payload);
+                });
             }
         }
     }

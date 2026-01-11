@@ -1,22 +1,21 @@
 package com.ourdressingtable.notification.inbox;
 
-import com.ourdressingtable.notification.domain.NotificationType;
+import com.ourdressingtable.common.util.MongoCreatedAtEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.Instant;
 
 @Document("notifications")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NotificationInbox {
+public class NotificationInbox extends MongoCreatedAtEntity {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     private Long notificationId;
 
@@ -33,7 +32,7 @@ public class NotificationInbox {
     private boolean read;
 
     @Builder
-    public NotificationInbox(String id, Long notificationId, Long memberId, String title, String body, String type, String dataJson, boolean read) {
+    public NotificationInbox(ObjectId id, Long notificationId, Long memberId, String title, String body, String type, String dataJson, boolean read) {
         this.id = id;
         this.notificationId = notificationId;
         this.memberId = memberId;

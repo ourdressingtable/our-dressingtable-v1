@@ -22,9 +22,9 @@ public class NotificationSenderSerivceImpl implements NotificationSenderService 
     public void deliver(ScheduledNotification scheduledNotification) {
         String title = switch (scheduledNotification.getType()) {
             case COSMETIC_EXPIRY_MONTH_BEFORE -> "[유통기한 D-30] 유통기한 한 달 남았습니다.";
-            case COSMETIC_EXPIRY_WEEK_BEFORE -> "[유통기한 D-30] 유통기한 일주일 남았습니다.";
-            case COSMETIC_EXPIRY_DAY_BEFORE -> "[유통기한 D-30] 유통기한 하루 남았습니다.";
-            case COSMETIC_EXPIRY_DAY_OF -> "[유통기한 D-30] 유통기한 당일 입니다.";
+            case COSMETIC_EXPIRY_WEEK_BEFORE -> "[유통기한 D-7] 유통기한 일주일 남았습니다.";
+            case COSMETIC_EXPIRY_DAY_BEFORE -> "[유통기한 D-1] 유통기한 하루 남았습니다.";
+            case COSMETIC_EXPIRY_DAY_OF -> "[유통기한 D-DAY] 유통기한 당일 입니다.";
         };
 
         var inbox = NotificationInbox.builder()
