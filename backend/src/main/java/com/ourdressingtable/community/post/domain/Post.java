@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class Post extends BaseTimeEntity {
     private boolean isDeleted = false;
 
     @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
+    private Instant deletedAt;
 
     @Builder
     public Post(Long id, String title, String content, int viewCount, int likeCount, Member member, CommunityCategory communityCategory, boolean isDeleted) {
@@ -109,7 +109,7 @@ public class Post extends BaseTimeEntity {
 
     public void markAsDeleted() {
         this.isDeleted = true;
-        this.deletedAt = LocalDateTime.now();
+        this.deletedAt = Instant.now();
     }
 
 //    @PreRemove
