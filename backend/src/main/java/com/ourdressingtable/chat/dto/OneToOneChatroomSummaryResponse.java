@@ -1,12 +1,8 @@
 package com.ourdressingtable.chat.dto;
 
-import com.ourdressingtable.chat.domain.Chat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 @Schema(description = "1:1 채팅방 요약 응답 DTO")
 public record OneToOneChatroomSummaryResponse (
@@ -26,7 +22,7 @@ public record OneToOneChatroomSummaryResponse (
     String lastMessage,
 
     @Schema(description = "마지막 채팅 시간", example = "2025-05-12T13:20:00")
-    LocalDateTime lastMessageTime,
+    Instant lastMessageTime,
 
     @Schema(description = "읽지 않은 메세지 수", example = "13")
     long unreadCount

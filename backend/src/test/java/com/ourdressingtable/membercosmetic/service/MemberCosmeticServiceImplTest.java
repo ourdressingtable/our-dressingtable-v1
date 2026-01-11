@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.ourdressingtable.auth.dto.CustomUserDetails;
@@ -18,6 +17,7 @@ import com.ourdressingtable.common.security.WithCustomUser;
 import com.ourdressingtable.common.util.SecurityUtil;
 import com.ourdressingtable.common.util.TestDataFactory;
 import com.ourdressingtable.cosmeticbrand.domain.CosmeticBrand;
+import com.ourdressingtable.cosmeticbrand.service.CosmeticBrandService;
 import com.ourdressingtable.cosmeticcategory.domain.CosmeticCategory;
 import com.ourdressingtable.dressingtable.domain.DressingTable;
 import com.ourdressingtable.dressingtable.service.DressingTableService;
@@ -62,6 +62,9 @@ public class MemberCosmeticServiceImplTest {
     private DressingTableService dressingTableService;
 
     @Mock
+    private CosmeticBrandService cosmeticBrandService;
+
+    @Mock
     private MemberService memberService;
 
     @BeforeEach
@@ -88,7 +91,7 @@ public class MemberCosmeticServiceImplTest {
         @DisplayName("회원 화장품 등록 성공")
         @WithCustomUser
         @Test
-        public void createMemberCosmetic_shouldReturnSuccess() throws Exception {
+        void createMemberCosmetic_shouldReturnSuccess() throws Exception {
             CreateMemberCosmeticRequest request = TestDataFactory.testMemberCosmeticRequest(1L);
             Member member = TestDataFactory.testMember(1L);
             DressingTable dressingTable = TestDataFactory.testDressingTable(1L,member);
@@ -111,7 +114,7 @@ public class MemberCosmeticServiceImplTest {
         @DisplayName("회원 화장품 등록 실패 - 존재하지 않는 화장대")
         @WithCustomUser
         @Test
-        public void createMemberCosmetic_shouldReturnDressingTableNotFoundError() throws Exception {
+        void createMemberCosmetic_shouldReturnDressingTableNotFoundError() throws Exception {
             given(dressingTableService.getDressingTableEntityById(100L)).willThrow(new OurDressingTableException(
                     ErrorCode.DRESSING_TABLE_NOT_FOUND));
 
@@ -129,7 +132,7 @@ public class MemberCosmeticServiceImplTest {
 
         @DisplayName("회원 화장품 수정 성공")
         @Test
-        public void updateMemberCosmetic_returnSuccess() throws Exception {
+        void updateMemberCosmetic_returnSuccess() throws Exception {
             Member member = TestDataFactory.testMember(1L);
             CosmeticBrand cosmeticBrand = TestDataFactory.testCosmeticBrand(1L);
             CosmeticCategory cosmeticCategory = TestDataFactory.testCosmeticCategory(1L);
@@ -155,7 +158,7 @@ public class MemberCosmeticServiceImplTest {
 
         @DisplayName("회원 화장품 수정 실패")
         @Test
-        public void updateMemberCosmetic_returnForbiddenError() throws Exception {
+        void updateMemberCosmetic_returnForbiddenError() throws Exception {
             Member owner = TestDataFactory.testMember(1L);
             CosmeticBrand cosmeticBrand = TestDataFactory.testCosmeticBrand(1L);
             CosmeticCategory cosmeticCategory = TestDataFactory.testCosmeticCategory(1L);

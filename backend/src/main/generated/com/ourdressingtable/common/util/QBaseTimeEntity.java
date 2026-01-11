@@ -22,9 +22,9 @@ public class QBaseTimeEntity extends EntityPathBase<BaseTimeEntity> {
     public final QCreatedAtEntity _super = new QCreatedAtEntity(this);
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;
 
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.Instant> updatedAt = createDateTime("updatedAt", java.time.Instant.class);
 
     public QBaseTimeEntity(String variable) {
         super(BaseTimeEntity.class, forVariable(variable));

@@ -24,7 +24,7 @@ public class QCommunityCategory extends EntityPathBase<CommunityCategory> {
     public final StringPath code = createString("code");
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;
 
     public final StringPath description = createString("description");
 
@@ -34,10 +34,10 @@ public class QCommunityCategory extends EntityPathBase<CommunityCategory> {
 
     public final StringPath name = createString("name");
 
-    public final NumberPath<Integer> sort_order = createNumber("sort_order", Integer.class);
+    public final NumberPath<Integer> sortOrder = createNumber("sortOrder", Integer.class);
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.Instant> updatedAt = _super.updatedAt;
 
     public QCommunityCategory(String variable) {
         super(CommunityCategory.class, forVariable(variable));
